@@ -27,8 +27,7 @@ public class TanServlet extends HttpServlet {
             URLConnection conn = url.openConnection();
 
             // open the stream and put it into BufferedReader
-            BufferedReader br = new BufferedReader(
-                               new InputStreamReader(conn.getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
             String inputLine;
             while ((inputLine = br.readLine()) != null) {
