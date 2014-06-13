@@ -1,0 +1,342 @@
+@CHARSET "ISO-8859-1";
+
+html{
+	height: 100%;
+}
+
+body{
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#page{
+	height:100%;
+	width:100%;
+	position:relative;
+}
+
+#map-canvas{
+	height: 60%;
+}
+
+#header{
+	width:100%;
+	height:50px;
+	background:#39A542;
+	position:relative;
+}
+
+#logo{
+	position: absolute;
+	height: 50px;
+	width: 100px;
+	z-index: 100;
+	left: 75px;
+}
+
+.logo{
+	font-family: Impact;
+	position: absolute;
+	color:#D24C48;
+}
+
+.logo-bckg{
+	background:#39A542;
+	position:absolute;
+	border-radius:5px;
+}
+
+#h{
+	font-size: 75px;
+}
+
+#ow{
+	font-size: 49px;
+	left: 40px;
+}
+
+#to{
+	font-size: 27px;
+	top: 48px;
+	left: 70px;
+}
+
+#go{
+	font-size: 75px;
+	left: 100px;
+}
+
+#h-bckg{
+	height: 39px;
+	width: 44px;
+	top: 41px;
+	border-radius: 3px;
+	left: -1px;
+}
+
+#ow-bckg{
+	height: 21px;
+	width: 77px;
+	left: 35px;
+	top: 33px;
+}
+
+#to-bckg{
+	height: 38px;
+	width: 30px;
+	left: 66px;
+	top: 42px;
+}
+
+#go-bckg{
+	height: 45px;
+	width: 86px;
+	left: 98px;
+	top: 36px;
+	border-radius: 16px;
+}
+
+#titre{
+	width: 100%;
+	font-weight: bold;
+	color: white;
+	font-family: Arial;
+	font-size: 20px;
+	text-align: center;
+	padding-top: 12px;
+}
+
+#signin{
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 135px;
+}
+
+#star{
+	float: left;
+	height: 25px;
+	margin-top: 11px;
+	margin-right: 7px;
+}
+
+#sign{
+	font-family: Arial;
+	font-weight: bold;
+	color: white;
+	font-size: 17px;
+	margin-top: 14px;
+}
+
+#bloc_details{
+	position: absolute;
+	background: none repeat scroll 0% 0% rgb(210, 76, 72);
+	width: 47px;
+	height: 65%;
+	top: 11%;
+	z-index: 10;
+	right: 0px;
+	font-family: Arial;
+	font-weight: bold;
+	font-size: 37px;
+	color: rgb(232, 121, 118);
+	display:none;
+	overflow:hidden;
+	
+}
+
+#title_details{
+	-webkit-transform: rotate(-90deg);  /* Chrome, Safari 3.1+ */
+    -moz-transform: rotate(-90deg);  /* Firefox 3.5-15 */
+    -ms-transform: rotate(-90deg);  /* IE 9 */
+    -o-transform: rotate(-90deg);  /* Opera 10.50-12.00 */
+    transform: rotate(-90deg);  /* Firefox 16+, IE 10+, Opera 12.10+ */
+	position: absolute;
+	transform: rotate(-90deg);
+	left: -54px;
+	top: 221px;
+	cursor:pointer;
+}
+
+#title_details_prev{
+	position: absolute;
+	top: 0px;
+	left: 3px;
+}
+
+#title_details_next{
+	position: absolute;
+	bottom: 0px;
+	left: 3px;
+}
+
+#details_top{
+	
+}
+
+#details_bottom{
+	
+}
+
+.details{
+	width: 261px;
+	margin-left: 65px;
+	height: 50%;
+}
+
+.subtitle_details{
+	color: white;
+	font-size: 15px;
+	margin-top: 20px;
+}
+
+#details_top > p{
+	color: white;
+	font-size: 13px;
+}
+
+#details_bottom > p{
+	color: white;
+	font-size: 13px;
+}
+
+#footer{
+	width:100%;
+	height:300px;
+	background:#39A542;
+	position:relative;
+}
+
+#foot_left{
+	float:left;
+	width:50%;
+	height:100%;
+	position: relative;
+}
+
+#foot_right{
+	float:left;
+	width:50%;
+	height:100%;
+	position: relative;
+}
+
+#cross{
+	position: absolute;
+	right: -35px;
+	top: 115px;
+	height: 70px;
+}
+
+.bloc{
+	background:#86D28B;
+	width: 400px;
+	height: 230px;
+	border-radius: 20px;
+	position: absolute;
+	top: 30px;
+}
+
+#bloc_left{
+	right: 50px;
+}
+
+#bloc_right{
+	left: 50px;
+}
+
+.bloc_title{
+	width: 100%;
+	text-align: center;
+	font-family: Arial;
+	font-weight: bold;
+	font-size: 20px;
+	color: white;
+	margin-top: 8px;
+}
+
+#bloc_left > form, #bloc_right > form{
+	margin-top:20px;
+}
+
+.bloc .label{
+	font-family: Arial;
+    font-weight: bold;
+    color: white;
+    font-size: 15px;
+    padding-left: 30px;
+    padding-bottom: 20px;
+}
+
+.bloc .input{
+	right: 45px;
+	position: absolute;
+	width: 230px;
+}
+
+#travelmode{
+	width: 50%;
+	margin-left: 20px;
+	float:left;
+}
+
+.input_hidden {
+    position: absolute;
+    left: -9999px;
+}
+
+#travelmode label {
+    display: inline-block;
+    cursor: pointer;
+}
+
+#travelmode label img {
+    padding: 9px;
+	float: left;
+	height: 42px;
+}
+
+.travelmode_selected{
+    box-shadow: 0px 0px 10px black;
+	border-radius: 15px;
+}
+
+#date{
+	width: 34%;
+	float: left;
+	margin-left: 20px;
+	font-size: 20px;
+	color: white;
+	font-weight: bold;
+}
+
+#date_label{
+	padding-bottom: 5px;
+	padding-left: 0px;
+	padding-top: 5px;
+}
+
+.date_input{
+	width: 35px;
+}
+
+#process{
+	color: white;
+	position: absolute;
+	font-size: 30px;
+	font-weight: bold;
+	right: 13px;
+	font-family: Arial;
+	-webkit-transform: rotate(-90deg);  /* Chrome, Safari 3.1+ */
+    -moz-transform: rotate(-90deg);  /* Firefox 3.5-15 */
+    -ms-transform: rotate(-90deg);  /* IE 9 */
+    -o-transform: rotate(-90deg);  /* Opera 10.50-12.00 */
+    transform: rotate(-90deg);  /* Firefox 16+, IE 10+, Opera 12.10+ */
+    text-shadow: -1px 1px 4px black;
+    cursor:pointer;
+}
+
+#bloc_right select{
+	margin-left: 15px;
+}
