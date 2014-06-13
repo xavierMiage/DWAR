@@ -31,6 +31,15 @@
 	      directionsDisplay.setMap(map);
 	    }
 	
+	    function myJsonMethod() {
+	    	alert("jsonmethod");
+	    	
+	    };
+	    
+	    function test(data) {
+	    		alert(data);
+	    };
+	    
 	    function calcRoute() {
 	      var start = document.getElementById("depart").value;
 	      var end = document.getElementById("arrivee").value;
@@ -41,13 +50,17 @@
 		    	//contentType:"application/json",
 		        dataType:'jsonp',
 		        url: "https://www.tan.fr/ewp/mhv.php/itineraire/address.json",
-		        data: { nom: start }
-		    })
-		    .done(function() {
-		    	alert("success");
-		    })
-		    .fail(function(jqXHR, status) {
-		    	alert("error : " + status);
+		        data: { nom: start, callback: "test"},
+		        async: false,
+		        contentType: "application/json",
+		    	jsonp: false,
+		    	jsonpCallback : "test",
+		    	success: function() {
+			    	alert("success");
+			    },
+			    error : function(jqXHR, status, exception) {
+			    	alert("error : " + status + " / " + exception);
+			    }
 		    });
 	      
 	      //$.getJSON("https://www.tan.fr/ewp/mhv.php/itineraire/address.json", {
