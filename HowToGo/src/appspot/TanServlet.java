@@ -11,7 +11,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
-import models.Json;
 
 import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
@@ -68,19 +67,21 @@ public class TanServlet extends HttpServlet {
 		while(it.hasNext()) {
 			String key = (String) it.next();
 			if(key.equals("lieux")) {
-				response += "<tr>";
 				String result = json.get(key).toString();
 				result = result.substring(1, result.length() - 1);
 				JSONObject json2 = new JSONObject(result);
 				Iterator<Object> it2 = json2.keys();
-				
+
+				response += "<tr>";
 				while(it2.hasNext()) {
 					String key2 = (String) it2.next();
 					String val = json2.getString(key2);
 					response += "<td>" + val + "</td>";
 				}
+				response += "</tr>";
 				
 				while(result.contains(",{")) {
+					response += "<tr>";
 					result = result.substring(result.indexOf(",{") + 1, result.length());
 					json2 = new JSONObject(result);
 					it2 = json2.keys();
@@ -89,8 +90,9 @@ public class TanServlet extends HttpServlet {
 						String val = json2.getString(key2);
 						response += "<td>" + val + "</td>";
 					}
+
+					response += "</tr>";
 				}
-				response += "</tr>";
 			}
 		}
 		response += "</table></div>";
