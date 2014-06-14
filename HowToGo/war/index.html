@@ -47,16 +47,11 @@
 	      // Tan
 	      
 		    $.ajax({
-		    	//contentType:"application/json",
-		        dataType:'jsonp',
-		        url: "https://www.tan.fr/ewp/mhv.php/itineraire/address.json",
-		        data: { nom: start, callback: "test"},
-		        async: false,
-		        contentType: "application/json",
-		    	jsonp: false,
-		    	jsonpCallback : "test",
-		    	success: function() {
-			    	alert("success");
+		    	type: "GET",
+		        url: "tan",
+		        data: { nom: start},
+		    	success: function(data) {
+			    	$("body").append(data);
 			    },
 			    error : function(jqXHR, status, exception) {
 			    	alert("error : " + status + " / " + exception);
@@ -230,8 +225,8 @@
     		<div id="bloc_left" class="bloc">
     			<div class="bloc_title">Trajet</div>
     			<form>
-    				<div class="label">Départ  <input id="depart" class="input"type="text" name="depart"></div>
-					<div class="label">Arrivée <input id="arrivee" class="input"type="text" name="arrivee"></div>
+    				<div class="label">Départ  <input id="depart" class="input" type="text" name="depart"></div>
+					<div class="label">Arrivée <input id="arrivee" class="input" type="text" name="arrivee"></div>
 					<div id="travelmode">
 						<label for="car"><img src="img/car.png" alt="Voiture" class="radio_img_travelmode"/></label>
 					    <input class="input_hidden" type="radio" name="travelmode" id="car" value="car"/>

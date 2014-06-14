@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="C:/Users/Xavier/Downloads/appengine-api-labs-1.9.5.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Xavier/Downloads/appengine-endpoints-1.7.5.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Xavier/Downloads/appengine-endpoints-deps-1.8.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Xavier/Downloads/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
