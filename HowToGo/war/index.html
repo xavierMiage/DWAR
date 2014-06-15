@@ -58,6 +58,18 @@
 			    }
 		    });
 	      
+	      
+		    $.ajax({
+		    	type: "GET",
+		        url: "itineraire",
+		        data: { depart: start, arrive: end},
+		    	success: function(data) {
+			    	$("body").append(data);
+			    },
+			    error : function(jqXHR, status, exception) {
+			    	alert("error : " + status + " / " + exception);
+			    }
+		    });
 	      //$.getJSON("https://www.tan.fr/ewp/mhv.php/itineraire/address.json", {
 	    //	  nom: start
 	    //  })

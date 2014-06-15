@@ -16,6 +16,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>Tan</servlet-name>
 		<servlet-class>appspot.TanServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>Itineraire</servlet-name>
+		<servlet-class>appspot.ItineraireServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>HowToGo</servlet-name>
 		<url-pattern>/howtogo</url-pattern>
@@ -29,6 +33,11 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet-mapping>
 		<servlet-name>Tan</servlet-name>
 		<url-pattern>/tan</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>Itineraire</servlet-name>
+		<url-pattern>/itineraire</url-pattern>
 	</servlet-mapping>
 	
 	<welcome-file-list>
