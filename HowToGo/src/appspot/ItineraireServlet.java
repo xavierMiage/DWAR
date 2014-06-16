@@ -67,16 +67,30 @@ public class ItineraireServlet extends HttpServlet {
 		response = "<div>D&eacute;part : " + json.get("adresseDepart") + " &agrave; " + json.get("heureDepart")
 				+ "<br/>Arriv&eacute; : " + json.get("adresseArrivee") + " &agrave; " + json.get("heureArrivee")
 				+ "<br/>Dur&eacute;e : " + json.get("duree")
-				+ "<table><tr><th>id</th><th>nom</th><th>cp</th><th>ville</th></tr>";
+				+ "<table>";
+		String jsonString = json.get("etapes").toString().substring(1, json.get("etapes").toString().length() - 1);
 		
-		JSONObject json2 = new JSONObject(json.get("etapes").toString().substring(1, json.get("etapes").toString().length() - 1));
-		
-		response += "<tr>";
-		response += 	"<td>" + json2.get("duree") + "</td><td>" + json2.get("arretStop") + "</td>";
-		if(json2.has("marche")) {
-			response +=	"<td>" + json2.get("marche") + "</td>";
+		while(jsonString.length() > 0) {
+			JSONObject json2 = new JSONObject(jsonString);
+			JSONObject json3 = new JSONObject(json2.get("arretStop").toString());
+			response += "<tr>";
+			response += 	"<td>" + json2.get("heureDepart") + " - " + json2.get("heureArrivee") + "</td><td>" + json3.get("libelle") + "</td>";
+			if(json2.get("marche").toString() == "true") {
+				response +=	"<td>Marche pendant " + json2.get("duree") + "</td>";
+			}
+			else {
+				JSONObject json4 = new JSONObject(json2.get("ligne").toString());
+				response += "<td>Ligne " + json4.get("numLigne") + " pendant " + json2.get("duree") + " en direction de " + json4.get("terminus") +"</td>";
+			}
+			response += "</tr>";
+			
+
+			if(!jsonString.contains(",{")) {
+				jsonString = "";
+			}
+			
+			jsonString = jsonString.substring(jsonString.indexOf(",{") + 1, jsonString.length());
 		}
-		response += "</tr>";
 		
 		/*Iterator<Object> it = json.keys();
 		while(it.hasNext()) {

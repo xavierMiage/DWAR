@@ -64,19 +64,12 @@
 		        url: "itineraire",
 		        data: { depart: start, arrive: end},
 		    	success: function(data) {
-			    	$("body").append(data);
+			    	$("#details_bottom").append("<p>" + data + "</p>");
 			    },
 			    error : function(jqXHR, status, exception) {
 			    	alert("error : " + status + " / " + exception);
 			    }
 		    });
-	      //$.getJSON("https://www.tan.fr/ewp/mhv.php/itineraire/address.json", {
-	    //	  nom: start
-	    //  })
-	    //  .done(function(json) {
-	   // 	  var obj = JSON.parse(json);
-	    //	  alert(obj.count);
-	     // });
    		  
 	      
 	      // Google MAP
@@ -228,7 +221,6 @@
   		</div>
   		<div id="details_bottom" class="details"/>
   			<div class="subtitle_details">En Transport en commun</div>
-  			<p></p>
   		</div>
   	</div>
     <div id="map-canvas"/></div>
