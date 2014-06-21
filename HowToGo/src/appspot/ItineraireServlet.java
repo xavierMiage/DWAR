@@ -6,10 +6,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -67,9 +69,9 @@ public class ItineraireServlet extends HttpServlet {
 	
 	private String parseJson(JSONObject json) throws JSONException {
 		String response;
-		Map<String, Object> map = new LinkedHashMap<String, Object>();
-		Map<String, String> map2 = new LinkedHashMap<String, String>();
-		map.put("depart", json.get("adresseDepart").toString());
+		Map<String, Object> map = new TreeMap<String, Object>();
+		Map<String, String> map2 = new TreeMap<String, String>();
+		map.put("adresseDepart", json.get("adresseDepart").toString());
 		map.put("heureDepart", json.get("heureDepart").toString());
 		map.put("adresseArrivee", json.get("adresseArrivee"));
 		map.put("heureArrivee", json.get("heureArrivee"));
@@ -108,7 +110,8 @@ public class ItineraireServlet extends HttpServlet {
 			}
 			
 			jsonString = jsonString.substring(jsonString.indexOf(",{") + 1, jsonString.length());
-			map.put(json3.get("libelle").toString(), map2);
+			map.put(json2.get("heureDepart").toString(), new HashMap<String, Object>(map2));
+			map2.clear();
 		}
 		
 		/*Iterator<Object> it = json.keys();
@@ -144,7 +147,7 @@ public class ItineraireServlet extends HttpServlet {
 		response += "</table></div>";
 
 		Gson gson = new Gson();
-		response = gson.toJson(map, Map.class);
+		response = gson.toJson(map, TreeMap.class);
 		
 		//return response;
 		return response;
