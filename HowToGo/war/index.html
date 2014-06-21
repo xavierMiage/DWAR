@@ -64,7 +64,15 @@
 		        url: "itineraire",
 		        data: { depart: start, arrive: end},
 		    	success: function(data) {
-			    	$("#details_bottom").append("<p>" + data + "</p>");
+		    		var parsedJSON = $.parseJSON(data);
+			    	$("#details_bottom").append("<p>" + parsedJSON.depart + "</p>");
+			    	
+			    	/*map.Polynine({
+			    		path: parcoursBus,//chemin du tracé
+			    		strokeColor: "#FF0000",//couleur du tracé
+			    		strokeOpacity: 1.0,//opacité du tracé
+			    		strokeWeight: 2//grosseur du tracé
+			    	});*/
 			    },
 			    error : function(jqXHR, status, exception) {
 			    	alert("error : " + status + " / " + exception);

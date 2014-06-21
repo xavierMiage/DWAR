@@ -6,14 +6,17 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
-
+import com.google.gson.Gson;
 
 @SuppressWarnings("serial")
 
@@ -64,7 +67,15 @@ public class ItineraireServlet extends HttpServlet {
 	
 	private String parseJson(JSONObject json) throws JSONException {
 		String response;
-		response = "<div>D&eacute;part : " + json.get("adresseDepart") + " &agrave; " + json.get("heureDepart")
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		Map<String, String> map2 = new LinkedHashMap<String, String>();
+		map.put("depart", json.get("adresseDepart").toString());
+		map.put("heureDepart", json.get("heureDepart").toString());
+		map.put("adresseArrivee", json.get("adresseArrivee"));
+		map.put("heureArrivee", json.get("heureArrivee"));
+		map.put("duree", json.get("duree"));
+		
+		response = "<div id='itineraire'>D&eacute;part : " + json.get("adresseDepart") + " &agrave; " + json.get("heureDepart")
 				+ "<br/>Arriv&eacute; : " + json.get("adresseArrivee") + " &agrave; " + json.get("heureArrivee")
 				+ "<br/>Dur&eacute;e : " + json.get("duree")
 				+ "<table>";
@@ -73,14 +84,21 @@ public class ItineraireServlet extends HttpServlet {
 		while(jsonString.length() > 0) {
 			JSONObject json2 = new JSONObject(jsonString);
 			JSONObject json3 = new JSONObject(json2.get("arretStop").toString());
+			
+			map2.put("heureDepart", json2.get("heureDepart").toString());
+			map2.put("libelle", json3.get("libelle").toString());
+			map2.put("heureArrivee", json2.get("heureArrivee").toString());
+			
 			response += "<tr>";
 			response += 	"<td>" + json2.get("heureDepart") + " - " + json2.get("heureArrivee") + "</td><td>" + json3.get("libelle") + "</td>";
 			if(json2.get("marche").toString() == "true") {
+				map2.put("route", "Marche pendant " + json2.get("duree").toString());
 				response +=	"<td>Marche pendant " + json2.get("duree") + "</td>";
 			}
 			else {
 				JSONObject json4 = new JSONObject(json2.get("ligne").toString());
 				response += "<td>Ligne " + json4.get("numLigne") + " pendant " + json2.get("duree") + " en direction de " + json4.get("terminus") +"</td>";
+				map2.put("route", "Ligne " + json4.get("numLigne").toString() + " pendant " + json2.get("duree").toString() + " en direction de " + json4.get("terminus").toString());
 			}
 			response += "</tr>";
 			
@@ -90,6 +108,7 @@ public class ItineraireServlet extends HttpServlet {
 			}
 			
 			jsonString = jsonString.substring(jsonString.indexOf(",{") + 1, jsonString.length());
+			map.put(json3.get("libelle").toString(), map2);
 		}
 		
 		/*Iterator<Object> it = json.keys();
@@ -123,7 +142,11 @@ public class ItineraireServlet extends HttpServlet {
 			}
 		}*/
 		response += "</table></div>";
+
+		Gson gson = new Gson();
+		response = gson.toJson(map, Map.class);
 		
+		//return response;
 		return response;
 	}
 }
