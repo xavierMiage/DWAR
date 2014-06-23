@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- The HTML 4.01 Transitional DOCTYPE declaration-->
+<!-- above set at the top of the file will set     -->
+<!-- the browser's rendering engine into           -->
+<!-- "Quirks Mode". Replacing this declaration     -->
+<!-- with a "Standards Mode" doctype is supported, -->
+<!-- but may lead to some differences in layout.   -->
+
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <LINK rel=stylesheet type="text/css" href="jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.css">
+    <LINK rel=stylesheet type="text/css" href="style.css">
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByVeSjVFXe2eReHcTHofh0B2uRApRaklM"> </script>
+    <script type="text/javascript" src="index.js"></script>
+  </head>
+  <body>
+  	
+  	<div id="header">
+  		<div id="logo">
+  			<div id="h-bckg" class="logo-bckg"></div>
+  			<div id="ow-bckg" class="logo-bckg"></div>
+  			<div id="to-bckg" class="logo-bckg"></div>
+  			<div id="go-bckg" class="logo-bckg"></div>
+  			<div id="h" class="logo">H</div>
+  			<div id="ow" class="logo">ow</div>
+  			<div id="to" class="logo">to</div>
+  			<div id="go" class="logo">GO</div>
+  		</div>
+  		<div id="titre">Comparateur de moyen de transport</div>
+  		<!--  form action="connect" method="post">
+			Identifiant : <input type="text" name="id"/>
+			Mot de passe : <input type="password" name="pwd"/>
+			<input type="submit" value="Connexion"/>
+		</form>-->
+  		<div id="signin">
+  			<img id="star" src="img/star.png"/>
+  			<p id="sign">Enjoy</p>
+  		</div>
+  		<div id="helphere">
+  			<img id="questionmark" src="img/help.png"/>
+  			<a href="help.html"><p id="help">Help</p></a>
+  		</div>
+  		
+  	</div>
+  	<div id="bloc_details"/>
+  		<div id="title_details_prev"/> << </div>
+  		<div id="title_details"/>DETAILS</div>
+  		<div id="title_details_next"/> << </div>
+  		<div id="details_top" class="details"/>
+  			<div class="subtitle_details"></div>
+  			<p></p>
+  		</div>
+  		<div id="details_bottom" class="details"/>
+  			<div class="subtitle_details">En Transport en commun</div>
+  		</div>
+  	</div>
+    <div id="map-canvas"/></div>
+    <div id="footer">
+    	<div id="foot_left">
+    		<div id="bloc_left" class="bloc">
+    			<div class="bloc_title">Trajet</div>
+    			<form>
+    				<div class="label">Départ  <input id="depart" class="input" type="text" name="depart"></div>
+					<div class="label">Arrivée <input id="arrivee" class="input" type="text" name="arrivee"></div>
+					<div id="travelmode">
+						<label for="car"><img src="img/car.png" alt="Voiture" class="radio_img_travelmode"/></label>
+					    <input class="input_hidden" type="radio" name="travelmode" id="car" value="car"/>
+						<label for="bike"><img src="img/bike.png" alt="Vélo" class="radio_img_travelmode"/></label>
+					    <input class="input_hidden" type="radio" name="travelmode" id="bike" value="bike"/>
+						<label for="walk"><img src="img/walk.png" alt="A pieds" class="radio_img_travelmode"/></label>
+					    <input class="input_hidden" type="radio" name="travelmode" id="walk" value="bike"/>
+					</div>
+					<div id="date">
+						<div class="label" id="date_label">heure</div>
+						<input class="date_input" id="hour" type="number" step="1" value="0" min="0" max="23">:
+						<input class="date_input" id="minute" type="number" step="1" value="0" min="0" max="59">
+					</div>
+    			</form>
+    			<div id="process">GO</div>
+    		</div>
+    		<img id="cross" src="img/cross.png">
+    	</div>
+    	<div id="foot_right">
+    		<div id="bloc_right" class="bloc">
+    			<div class="bloc_title">Informations complémentaires</div>
+    			<form>
+    				<div class="label">Carburant  
+						<select id="carburant" name="carburant">
+						<!-- Cout au Km http://lentreprise.lexpress.fr/gestion-fiscalite/impots-taxes/frais-de-carburant-le-bareme-2014_1524924.html -->
+    					<option value="0.1072">Gazoil</option> 
+						  <option value="0.1448" selected>Essence</option>
+						  <option value="0.094">GPL</option>
+						</select>
+					</div>
+    			</form>
+    		</div>
+    	</div>
+    </div>
+  </body>
+</html>
