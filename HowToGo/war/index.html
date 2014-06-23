@@ -68,12 +68,10 @@
 		    					
 		    			var trip = new Array();	
 		    			
-		    			geocoder.geocode( { 'address': parsedJSON.adresseDepart + ", Nantes"}, function(results, status) {
+		    			/*geocoder.geocode( { 'address': parsedJSON.adresseDepart + ", Nantes"}, function(results, status) {
 			    	      if (status == google.maps.GeocoderStatus.OK) {
 			    	    	  var latlng = results[0].geometry.location.toString().substr(1, results[0].geometry.location.toString().length - 1);
 			    	    	  latlng = latlng.split(", ");
-			    	    	  alert(results[0].geometry.location);
-			    	    	  alert(latlng[0]);
 	    	        		  trip.push(new google.maps.LatLng(latlng[0], latlng[1]));
 			    	      } else {
 			    	        alert("Geocode was not successful for the following reason: " + status);
@@ -87,18 +85,26 @@
 			    	      } else {
 			    	        alert("Geocode was not successful for the following reason: " + status);
 			    	      }
-			    	    });
+			    	    });*/
 		    			
 			    		$.each(parsedJSON, function(index, element) {
-			    			if(typeof element == "object") {
+			    			if(typeof element == "object" && index != "itineraire") {
 			    				//trip.push(element.libelle);
 		    					inject += "<tr><td>" + element.heureDepart + " - " + element.heureArrivee + "</td><td>" + element.libelle + "</td><td>" + element.route + "</td></tr>";
 			    			}
 			    		});
 			    		
 			    		inject += "</table></div>";
+			    		
 				    	$("#details_bottom").append(inject);
-
+				    	
+				    	inject = "";
+				    	$.each(parsedJSON.itineraire, function(index, element) {
+				    		trip.push(new google.maps.LatLng(element.lat, element.lng));
+				    		inject += "<p>" + index + "</p><br/>";
+				    	});
+					
+				    	$("body").append(data);
 				    	var poly = new google.maps.Polyline({
 				    		map: map,
 				    		path: trip,//chemin du tracé

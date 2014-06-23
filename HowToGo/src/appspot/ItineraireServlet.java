@@ -1,6 +1,9 @@
 package appspot;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -11,6 +14,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javax.servlet.ServletException;
@@ -71,6 +75,7 @@ public class ItineraireServlet extends HttpServlet {
 		String response;
 		Map<String, Object> map = new TreeMap<String, Object>();
 		Map<String, String> map2 = new TreeMap<String, String>();
+		Map<String, Object> map3 = new TreeMap<String, Object>();
 		map.put("adresseDepart", json.get("adresseDepart").toString());
 		map.put("heureDepart", json.get("heureDepart").toString());
 		map.put("adresseArrivee", json.get("adresseArrivee"));
@@ -109,10 +114,14 @@ public class ItineraireServlet extends HttpServlet {
 				jsonString = "";
 			}
 			
+			
 			jsonString = jsonString.substring(jsonString.indexOf(",{") + 1, jsonString.length());
 			map.put(json2.get("heureDepart").toString(), new HashMap<String, Object>(map2));
 			map2.clear();
 		}
+		
+		map3 = this.getLatLngItineraire(map);
+		map.put("itineraire", new TreeMap<String, Object>(map3));
 		
 		/*Iterator<Object> it = json.keys();
 		while(it.hasNext()) {
@@ -151,5 +160,76 @@ public class ItineraireServlet extends HttpServlet {
 		
 		//return response;
 		return response;
+	}
+	
+	private Map<String, Object> getLatLngItineraire(Map<String, Object> parsed) {
+
+		Map<String, Object> map = new TreeMap<String, Object>();
+		Map<String, String> hashmap = new HashMap<String, String>();
+		
+		File stop = new File(this.getServletContext().getRealPath("data/stops.txt"));
+		File shape = new File(this.getServletContext().getRealPath("data/shapes.txt"));
+		
+		String depart = parsed.get("adresseDepart").toString();
+		String arrive = parsed.get("adresseArrivee").toString();
+		
+		try {
+			InputStream ips=new FileInputStream(stop); 
+			InputStreamReader ipsr=new InputStreamReader(ips);
+			BufferedReader br=new BufferedReader(ipsr);
+			String ligne;
+			while ((ligne=br.readLine())!=null){
+				String str[] = ligne.split(",");
+				String current = str[1].replace("\"", "");
+				if(depart.toLowerCase().contains(current.toLowerCase())) {
+					hashmap.put("lat", str[3]);
+					hashmap.put("lng", str[4]);
+					map.put(parsed.get("heureDepart").toString(), new HashMap<String, String>(hashmap));
+				}
+				if(arrive.toLowerCase().contains(current.toLowerCase())) {
+					hashmap.put("lat", str[3]);
+					hashmap.put("lng", str[4]);
+					map.put(parsed.get("heureArrivee").toString(), new HashMap<String, String>(hashmap));
+				}
+				
+				Set<String> s = parsed.keySet();
+				Iterator<String> i = s.iterator();
+				
+				while(i.hasNext()) {
+					String cur = i.next();
+					if(parsed.get(cur) instanceof Map) {
+						Map<String, String> m = (Map<String, String>) parsed.get(cur);
+						if(m.get("libelle").toString().toLowerCase().contains(current.toLowerCase())) {
+							hashmap.put("lat", str[3]);
+							hashmap.put("lng", str[4]);
+							map.put(m.get("heureDepart").toString(), new HashMap<String, String>(hashmap));
+						}
+					}
+				}
+			}
+			br.close();
+			
+			/*ips = new FileInputStream(shape); 
+			ipsr = new InputStreamReader(ips);
+			br = new BufferedReader(ipsr);
+			while((ligne=br.readLine()) != null) {
+				String str[] = ligne.split(",");
+				if(map.get("latDep") == str[1]) {
+					map.put("latDep", str[2]);
+					map.put("lngDep", str[3]);
+				}
+				if(arrive.toLowerCase().contains(current.toLowerCase())) {
+					map.put("latArr", str[3]);
+					map.put("lngArr", str[4]);
+				}
+			}
+			
+			br.close();*/
+		}
+		catch (Exception e){
+			System.out.println(e.toString());
+		}
+
+		return map;
 	}
 }
