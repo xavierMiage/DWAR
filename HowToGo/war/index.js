@@ -49,8 +49,8 @@ function calcRoute() {
 	    		var parsedJSON = $.parseJSON(data);
 	    		var inject = "";
 	    		
-	    		inject += "<div> Départ : " + parsedJSON.adresseDepart + " à " + parsedJSON.heureDepart
-    					+ "<br/> Arriv&eacute;e : " + parsedJSON.adresseArrivee + " à " + parsedJSON.heureArrivee
+	    		inject += "<div> DÃ©part : " + parsedJSON.adresseDepart + " Ã  " + parsedJSON.heureDepart
+    					+ "<br/> Arriv&eacute;e : " + parsedJSON.adresseArrivee + " Ã  " + parsedJSON.heureArrivee
     					+ "<br/> Dur&eacute;e : " + parsedJSON.duree + "<table>";
     					
     			var trip = new Array();	
@@ -94,10 +94,10 @@ function calcRoute() {
 		    	$("body").append(data);
 		    	var poly = new google.maps.Polyline({
 		    		map: map,
-		    		path: trip,//chemin du tracé
-		    		strokeColor: "#FF0000",//couleur du tracé
-		    		strokeOpacity: 1.0,//opacité du tracé
-		    		strokeWeight: 2//grosseur du tracé
+		    		path: trip,//chemin du tracÃ©
+		    		strokeColor: "#FF0000",//couleur du tracÃ©
+		    		strokeOpacity: 1.0,//opacitÃ© du tracÃ©
+		    		strokeWeight: 2//grosseur du tracÃ©
 		    	});
 
 		    	poly.setMap(map);
@@ -138,7 +138,7 @@ function calcRoute() {
       directionsService.route(request, function(result, status) {
         if (status == google.maps.DirectionsStatus.OK) {
 		  if($('input[name=travelmode]:checked').val()=="bike"){
-			$("#details_top > .subtitle_details").text("A Vélo");
+			$("#details_top > .subtitle_details").text("A VÃ©lo");
 		  }else if($('input[name=travelmode]:checked').val()=="walk"){
 		 	$("#details_top > .subtitle_details").text("A Pieds");
 		  }else{
@@ -146,8 +146,8 @@ function calcRoute() {
 		  }
           directionsDisplay.setDirections(result);
           var text = "Distance: "+result.routes[0].legs[0].distance.value/1000+"km";
-          text += "<br/>Durée: "+secondsToTime(result.routes[0].legs[0].duration.value);
-          text += "<br/>Coût: "+Math.round(result.routes[0].legs[0].distance.value/1000*$("#carburant").val()*100)/100+"€";
+          text += "<br/>DurÃ©e: "+secondsToTime(result.routes[0].legs[0].duration.value);
+          text += "<br/>CoÃ»t: "+Math.round(result.routes[0].legs[0].distance.value/1000*$("#carburant").val()*100)/100+"â‚¬";
           $("#details_top > p").text("");
           $("#details_top > p").append(text);
         }
@@ -189,7 +189,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 		//Autocompletion
 	var availableTags = [
 		"Michelet",
-		"Facultés",
+		"FacultÃ©s",
 		"Commerce"
 	];
 	
@@ -197,30 +197,56 @@ google.maps.event.addDomListener(window, 'load', initialize);
 		source: availableTags
 	});
 	
-	$("#map-canvas").height($(window).height()-350);
+	$("#map-canvas").height($("body").height()-350);
 	//google.maps.event.trigger(map,'resize');
+	var h_map = $("#map-canvas").height();
+	var h_footer = $("#footer").height();
+	var h_body = $("body").height();
+
+	$("#title_details").css("top",($("#bloc_details").height()-158/2)/2+"px");
 	
 	$('.input').pressEnter(function(){
 		calcRoute();
-		$("#map-canvas").animate({height: "75%"});
+		$("#map-canvas").animate({height: "86.8%"});
 		$("#bloc_details").fadeIn();
+		$("#footer").animate({height: "54px"});
+		$("#foot_title").slideDown();;
 	});
 	
 	$('.date_input').pressEnter(function(){
 		calcRoute();
-		$("#map-canvas").animate({height: "75%"});
+		$("#map-canvas").animate({height: "86.8%"});
 		$("#bloc_details").fadeIn();
+		$("#footer").animate({height: "54px"});
+		$("#foot_title").slideDown();;
 	});
 	
 	$("#process").click(function(){
 		calcRoute();
-		$("#map-canvas").animate({height: "75%"});
+		$("#map-canvas").animate({height: h_body-104});
 		$("#bloc_details").fadeIn();
+		$("#footer").animate({height: "54px"});
+		$("#foot_title").slideDown();
+	});
+	
+	$("#foot_title").click(function(){
+		$("#map-canvas").animate({height: h_map});
+		$("#bloc_details").fadeOut();
+		$("#footer").animate({height: h_footer});
+		$("#foot_title").slideUp();
 	});
      
      $('.radio_img_travelmode').click(function(){
     	 $('.radio_img_travelmode').removeClass('travelmode_selected');
          $(this).addClass('travelmode_selected');
+     });
+     
+     $('#questionmark').click(function(){
+    	 $('#backhelp').animate({top: "130px"}, {duration: "slow"});
+     });
+     
+     $('#closehelp').click(function(){
+    	 $('#backhelp').animate({top: "-1345px"}, {duration: "slow"});
      });
      
      var slide= false;
@@ -235,9 +261,3 @@ google.maps.event.addDomListener(window, 'load', initialize);
      });
 	
 });
-
-
-
-
-  
-	
