@@ -9,10 +9,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -96,7 +100,8 @@ public class ItineraireServlet extends HttpServlet {
 			}
 			else {
 				JSONObject json4 = new JSONObject(json2.get("ligne").toString());
-				map2.put("route", "Ligne " + json4.get("numLigne").toString() + " pendant " + json2.get("duree").toString() + " en direction de " + json4.get("terminus").toString());
+				map2.put("ligne", json4.get("numLigne").toString());
+				map2.put("route", "Ligne " + json4.get("numLigne").toString() + " pendant " + json2.get("duree").toString() + " en direction de " + json4.get("terminus").toString() + " et descendre à " + json3.get("libelle").toString());
 			}
 			
 
@@ -154,6 +159,7 @@ public class ItineraireServlet extends HttpServlet {
 	private Map<String, Object> getLatLngItineraire(Map<String, Object> parsed) {
 
 		Map<String, Object> map = new TreeMap<String, Object>();
+		Map<Integer, Object> returnMap = new TreeMap<Integer, Object>();
 		Map<String, String> hashmap = new HashMap<String, String>();
 		
 		File stop = new File(this.getServletContext().getRealPath("data/stops.txt"));
@@ -185,22 +191,82 @@ public class ItineraireServlet extends HttpServlet {
 			}
 			br.close();
 			
-			/*ips = new FileInputStream(shape); 
-			ipsr = new InputStreamReader(ips);
-			br = new BufferedReader(ipsr);
-			while((ligne=br.readLine()) != null) {
-				String str[] = ligne.split(",");
-				if(map.get("latDep") == str[1]) {
-					map.put("latDep", str[2]);
-					map.put("lngDep", str[3]);
-				}
-				if(arrive.toLowerCase().contains(current.toLowerCase())) {
-					map.put("latArr", str[3]);
-					map.put("lngArr", str[4]);
-				}
-			}*/
+			// Algo pour avoir tous les coordonnées des trajets... Mais ne marche pas car les fichiers de la tan sont pourris...
 			
-			br.close();
+			/*List<String> l = new ArrayList<String>(map.keySet());
+			
+			ListIterator<String> it = l.listIterator();
+			int i = 0;
+			//String id_shape = "a", id_shape2 = "a";
+			while(it.hasNext()) {
+				String current = it.next();
+				String nextCurrent = it.next();
+				Map<String, String> m = (Map<String, String>) map.get(current);
+				Map<String, String> m2 = (Map<String, String>) parsed.get(current);
+				Map<String, String> mBis = (Map<String, String>) map.get(nextCurrent);
+				Map<String, String> m2Bis = (Map<String, String>) parsed.get(nextCurrent);
+				
+
+				System.out.println(m2.toString());
+				System.out.println("Coord : " + m.toString());
+				System.out.println("bis : " + m2Bis.toString());
+				System.out.println("Coord bis : " + mBis.toString());
+				ips = new FileInputStream(shape); 
+				ipsr = new InputStreamReader(ips);
+				br = new BufferedReader(ipsr);
+				while((ligne = br.readLine()) != null) {
+					String str[] = ligne.split(",");
+					
+					String id_shape = null;
+					String id_shape2 = null;
+					String ligne1 = null;
+					String ligne2 = null;
+					if(m2Bis.containsKey("ligne") && m2Bis.get("ligne").toString().equals(str[0].substring(0, str[0].length() - 4))) {
+						if(m.get("lat").toString().equals(str[1]) && m.get("lng").toString().equals(str[2])) {
+							hashmap.put("lat", str[1]);
+							hashmap.put("lng", str[2]);
+							returnMap.put(i, new HashMap<String, String>(hashmap));
+							
+							id_shape = str[0];
+							ligne1 = ligne;
+							
+							ligne = null;
+							ips = new FileInputStream(shape); 
+							ipsr = new InputStreamReader(ips);
+							br = new BufferedReader(ipsr);
+							i++;
+							//System.out.println("bis : " + m2Bis.get("route").toString());
+							while((ligne = br.readLine()) != null) {
+								if(mBis.get("lat").toString().equals(str[1]) && mBis.get("lng").toString().equals(str[2])) {
+									hashmap.put("lat", str[1]);
+									hashmap.put("lng", str[2]);
+									returnMap.put(i, new HashMap<String, String>(hashmap));
+									
+									id_shape2 = str[0];
+									ligne2 = ligne;
+								}
+							}
+							
+							if(id_shape.compareTo(id_shape2) > 0 ) {
+								
+							}
+							else if(id_shape.compareTo(id_shape2) == 0) {
+								
+							}
+							else {
+								
+							}
+							
+						}
+					}
+				}
+				it.previous();
+				
+			}
+			
+			//System.out.println(returnMap.toString());
+			
+			br.close();*/
 		}
 		catch (Exception e){
 			System.out.println(e.toString());
