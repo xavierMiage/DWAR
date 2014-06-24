@@ -82,10 +82,6 @@ public class ItineraireServlet extends HttpServlet {
 		map.put("heureArrivee", json.get("heureArrivee"));
 		map.put("duree", json.get("duree"));
 		
-		response = "<div id='itineraire'>D&eacute;part : " + json.get("adresseDepart") + " &agrave; " + json.get("heureDepart")
-				+ "<br/>Arriv&eacute; : " + json.get("adresseArrivee") + " &agrave; " + json.get("heureArrivee")
-				+ "<br/>Dur&eacute;e : " + json.get("duree")
-				+ "<table>";
 		String jsonString = json.get("etapes").toString().substring(1, json.get("etapes").toString().length() - 1);
 		
 		while(jsonString.length() > 0) {
@@ -95,19 +91,13 @@ public class ItineraireServlet extends HttpServlet {
 			map2.put("heureDepart", json2.get("heureDepart").toString());
 			map2.put("libelle", json3.get("libelle").toString());
 			map2.put("heureArrivee", json2.get("heureArrivee").toString());
-			
-			response += "<tr>";
-			response += 	"<td>" + json2.get("heureDepart") + " - " + json2.get("heureArrivee") + "</td><td>" + json3.get("libelle") + "</td>";
 			if(json2.get("marche").toString() == "true") {
 				map2.put("route", "Marche pendant " + json2.get("duree").toString());
-				response +=	"<td>Marche pendant " + json2.get("duree") + "</td>";
 			}
 			else {
 				JSONObject json4 = new JSONObject(json2.get("ligne").toString());
-				response += "<td>Ligne " + json4.get("numLigne") + " pendant " + json2.get("duree") + " en direction de " + json4.get("terminus") +"</td>";
 				map2.put("route", "Ligne " + json4.get("numLigne").toString() + " pendant " + json2.get("duree").toString() + " en direction de " + json4.get("terminus").toString());
 			}
-			response += "</tr>";
 			
 
 			if(!jsonString.contains(",{")) {
@@ -153,7 +143,6 @@ public class ItineraireServlet extends HttpServlet {
 				response += "</tr>";
 			}
 		}*/
-		response += "</table></div>";
 
 		Gson gson = new Gson();
 		response = gson.toJson(map, TreeMap.class);
@@ -170,9 +159,6 @@ public class ItineraireServlet extends HttpServlet {
 		File stop = new File(this.getServletContext().getRealPath("data/stops.txt"));
 		File shape = new File(this.getServletContext().getRealPath("data/shapes.txt"));
 		
-		String depart = parsed.get("adresseDepart").toString();
-		String arrive = parsed.get("adresseArrivee").toString();
-		
 		try {
 			InputStream ips=new FileInputStream(stop); 
 			InputStreamReader ipsr=new InputStreamReader(ips);
@@ -181,16 +167,6 @@ public class ItineraireServlet extends HttpServlet {
 			while ((ligne=br.readLine())!=null){
 				String str[] = ligne.split(",");
 				String current = str[1].replace("\"", "");
-				if(depart.toLowerCase().contains(current.toLowerCase())) {
-					hashmap.put("lat", str[3]);
-					hashmap.put("lng", str[4]);
-					map.put(parsed.get("heureDepart").toString(), new HashMap<String, String>(hashmap));
-				}
-				if(arrive.toLowerCase().contains(current.toLowerCase())) {
-					hashmap.put("lat", str[3]);
-					hashmap.put("lng", str[4]);
-					map.put(parsed.get("heureArrivee").toString(), new HashMap<String, String>(hashmap));
-				}
 				
 				Set<String> s = parsed.keySet();
 				Iterator<String> i = s.iterator();
@@ -222,9 +198,9 @@ public class ItineraireServlet extends HttpServlet {
 					map.put("latArr", str[3]);
 					map.put("lngArr", str[4]);
 				}
-			}
+			}*/
 			
-			br.close();*/
+			br.close();
 		}
 		catch (Exception e){
 			System.out.println(e.toString());
