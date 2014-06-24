@@ -13,7 +13,7 @@
     <LINK rel=stylesheet type="text/css" href="style.css">
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.js"></script>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByVeSjVFXe2eReHcTHofh0B2uRApRaklM"> </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByVeSjVFXe2eReHcTHofh0B2uRApRaklM"></script>
     <script type="text/javascript" src="index.js"></script>
   </head>
   <body>
@@ -41,7 +41,7 @@
   		</div>
   		<div id="helphere">
   			<img id="questionmark" src="img/help.png"/>
-  			<a href="help.html"><p id="help">Help</p></a>
+
   		</div>
   		
   	</div>
@@ -59,16 +59,21 @@
   	</div>
     <div id="map-canvas"/></div>
     <div id="footer">
+    	<div id="foot_title">
+    		<div id="foot_title1"><<</div>
+    		PARAMETRES DE L'ITINERAIRE
+    		<div id="foot_title2"><<</div>
+    	</div>
     	<div id="foot_left">
     		<div id="bloc_left" class="bloc">
     			<div class="bloc_title">Trajet</div>
     			<form>
-    				<div class="label">D�part  <input id="depart" class="input" type="text" name="depart"></div>
-					<div class="label">Arriv�e <input id="arrivee" class="input" type="text" name="arrivee"></div>
+    				<div class="label">Départ  <input id="depart" class="input" type="text" name="depart"></div>
+					<div class="label">Arrivée <input id="arrivee" class="input" type="text" name="arrivee"></div>
 					<div id="travelmode">
 						<label for="car"><img src="img/car.png" alt="Voiture" class="radio_img_travelmode"/></label>
 					    <input class="input_hidden" type="radio" name="travelmode" id="car" value="car"/>
-						<label for="bike"><img src="img/bike.png" alt="V�lo" class="radio_img_travelmode"/></label>
+						<label for="bike"><img src="img/bike.png" alt="Vélo" class="radio_img_travelmode"/></label>
 					    <input class="input_hidden" type="radio" name="travelmode" id="bike" value="bike"/>
 						<label for="walk"><img src="img/walk.png" alt="A pieds" class="radio_img_travelmode"/></label>
 					    <input class="input_hidden" type="radio" name="travelmode" id="walk" value="bike"/>
@@ -85,7 +90,7 @@
     	</div>
     	<div id="foot_right">
     		<div id="bloc_right" class="bloc">
-    			<div class="bloc_title">Informations compl�mentaires</div>
+    			<div class="bloc_title">Informations complémentaires</div>
     			<form>
     				<div class="label">Carburant  
 						<select id="carburant" name="carburant">
@@ -99,5 +104,50 @@
     		</div>
     	</div>
     </div>
+    <div id="backhelp">
+    	<img id="closehelp" src="img/close.png"/>
+		<div id="bloc_help1">
+  			<h2>Chers Visiteurs, Bienvenu sur HowToGo</h2>
+  			<h3>Facile à utiliser, HowToGo est le compagnon de route idéal !!</h3>
+  			<p>Du trajet quotidien au départ en vacances, HowToGo vous propose l'itinéraire le plus adapté en temps réel en seulement quelques clics.</p>
+  		</div>
+	  		
+  		<div id="bloc_help2">
+	  		<h2>Un peu perdu ?</h2>
+	  		<h4>Suivez le guide !!</h4>
+	  		
+	  		<div id="bloc_cadre">
+		  		<h4>Etape 1 :</h4>
+		  		<p>Saisissez les adresses de vos points de départ et d'arrivée dans les champs réservés à cet effet (Cadre "Trajet").</p>
+		  		<p>Si vous ne connaissez pas l'orthographe exacte des adresses, pas d'inquiètude nous vous aidons. Commencez à saisir plus sélectionner l'adresse souhaitée.</p>
+	  		</div>
+	  		
+	  		<div id="bloc_cadre">
+		  		<h4>Etape 2 :</h4>
+		  		<p>Sélectionnez votre moyen de transport :</p>
+		  		<table>
+			  		<tr><td><div class="icone"><img id="car" src="img/car.png"/></div></td><td><p>En voiture</p></td><td><p>Sélectionnez également le carburant consommé par votre véhicule.</p></td></tr>
+			  		<tr><td><div class="icone"><img id="bus" src="img/bus.gif"/></td><td><p>En transport en commun</p></td></tr>
+			  		<tr><td><div class="icone"><img id="bike" src="img/bike.png"/></div></td><td><p>A vélo</p></td></tr>
+			  		<tr><td><div class="icone"><img id="walk" src="img/walk.png"/></div></td><td><p>A pied</p></td></tr>
+		  		</table>
+	  		</div>
+	  		
+	  		<div id="bloc_cadre">
+		  		<h4>Etape 3 :</h4>
+		  		<p>Précisez à présent votre heure de départ (Votre temps de trajet sera calculé en fonction du mode de transport choisi et des conditions de circulation en temps réel).</p>
+	  		</div>
+	  		
+	  		<div id="bloc_cadre">
+		  		<h4>Etape 4 :</h4>
+		  		<p>Effectuez votre requête en cliquant sur : GO</p>
+	  		</div>
+	  		
+	  		<h2>Alors prêt ? Clic & Go !!</h2>
+
+	  		<p>Votre itinéraire s'inscrit alors sur la plan. Les détails de votre trajet sont mentionnés dans l'onglet "DETAILS" à droite de la carte (Cliquer pour afficher).</p>
+	  		<p>Vous pouvez également modifier votre recherche.</p>
+
+		</div>
+	</div>
   </body>
-</html>
