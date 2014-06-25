@@ -33,7 +33,7 @@ function calcRoute() {
 	        url: "tan",
 	        data: { nom: start},
 	    	success: function(data) {
-		    	$("body").append(data);
+		    	//$("body").append(data);
 		    },
 		    error : function(jqXHR, status, exception) {
 		    	alert("error : " + status + " / " + exception);
@@ -84,6 +84,7 @@ function calcRoute() {
 	    		inject += "</table></div></p>";
 	    		
 	    		$("#details_bottom p").remove();
+	    		$("#table_details").remove();
 		    	$("#details_bottom").append(inject);
 		        $("#table_details").niceScroll({cursorcolor:"#E87976"});
 
@@ -93,8 +94,10 @@ function calcRoute() {
 		    		trip.push(new google.maps.LatLng(element.lat, element.lng));
 		    		inject += "<p>" + index + "</p><br/>";
 		    	});
-			
-		    	$("body").append(data);
+		    	
+		    	//json print
+		    	//$("body").append(data);
+		    	alert(data);
 		    	var poly = new google.maps.Polyline({
 		    		map: map,
 		    		path: trip,//chemin du tracé
@@ -104,6 +107,10 @@ function calcRoute() {
 		    	});
 
 		    	poly.setMap(map);
+		    	
+		    	//test
+		    	
+		    	//endtest
 		    	
 		    	
 		    },
