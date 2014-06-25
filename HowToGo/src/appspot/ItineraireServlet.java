@@ -9,9 +9,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -37,14 +39,12 @@ public class ItineraireServlet extends HttpServlet {
 		String rep = "";
 
         try {
-        	String depart = (String) req.getAttribute("depart");
-        	String arrive = (String) req.getAttribute("arrive");
-        	
-        	depart = URLEncoder.encode("Address|ADDRESS11524|JULES VERNE|Nantes||boulevard|307521|2256362", "UTF-8");
-        	arrive = URLEncoder.encode("Address|ADDRESS11910|MAIL PABLO PICASSO|Nantes|||306856|2253442", "UTF-8");
-            // get URL content
+        	String depart = (String) req.getParameter("depart");
+        	String arrive = (String) req.getParameter("arrive");
+        	String heure = (String) req.getParameter("heure");
+        	String date = (String) req.getParameter("date");
 
-            String a= "https://www.tan.fr/ewp/mhv.php/itineraire/resultat.json?depart=" + depart + "&arrive=" + arrive + "&retour=0&type=0&accessible=0&temps=2014-06-15%2014:00";
+            String a= "https://www.tan.fr/ewp/mhv.php/itineraire/resultat.json?depart=" + depart + "&arrive=" + arrive + "&retour=0&type=0&accessible=0&temps=2014-06-26%20" + heure;
             url = new URL(a);
             URLConnection conn = url.openConnection();
 
@@ -56,8 +56,9 @@ public class ItineraireServlet extends HttpServlet {
             	rep += inputLine;
             }
             br.close();
-            rep = rep.substring(1, rep.length() - 1);
 
+            rep = rep.substring(1, rep.length() - 1);
+            
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {

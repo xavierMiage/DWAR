@@ -23,28 +23,29 @@ function initialize() {
 }
 
 function calcRoute() {
-  var start = document.getElementById("depart").value;
-  var end = document.getElementById("arrivee").value;
+  var startVal =  $("#departSelect option:selected").val(); 
+  var start =  $("#depart").val(); 
+  var endVal =  $("#arriveeSelect option:selected").val();
+  var end =  $("#arrivee").val();
   if(start != null && start.length > 0) {
       // Tan
-      
-	    $.ajax({
-	    	type: "GET",
-	        url: "tan",
-	        data: { nom: start},
-	    	success: function(data) {
-		    	//$("body").append(data);
-		    },
-		    error : function(jqXHR, status, exception) {
-		    	alert("error : " + status + " / " + exception);
-		    }
-	    });
-      
-      
+	  	var hour = $("#hour").val();
+	  	var minute = $("#minute").val();
+	  	
+	  	if(hour.length < 2)
+	  		hour = "0" + hour;
+	  	
+	  	if(minute.length < 2)
+	  		minute = "0" + minute;
+	  	
+	  	var now = new Date();
+	  	var an = now.getFullYear();
+	  	var mois = ('0'+now.getMonth()+1).slice(-2);
+	  	var jour = ('0'+now.getDate()   ).slice(-2);
 	    $.ajax({
 	    	type: "GET",
 	        url: "itineraire",
-	        data: { depart: start, arrive: end},
+	        data: { depart: encodeURIComponent(startVal), arrive: encodeURIComponent(endVal), heure: hour + ":" + minute, date: an + "-" + mois + "-" + jour},
 	    	success: function(data) {
 	    		var parsedJSON = $.parseJSON(data);
 	    		var inject = "";
@@ -55,28 +56,9 @@ function calcRoute() {
     					
     			var trip = new Array();	
     			
-    			/*geocoder.geocode( { 'address': parsedJSON.adresseDepart + ", Nantes"}, function(results, status) {
-	    	      if (status == google.maps.GeocoderStatus.OK) {
-	    	    	  var latlng = results[0].geometry.location.toString().substr(1, results[0].geometry.location.toString().length - 1);
-	    	    	  latlng = latlng.split(", ");
-	        		  trip.push(new google.maps.LatLng(latlng[0], latlng[1]));
-	    	      } else {
-	    	        alert("Geocode was not successful for the following reason: " + status);
-	    	      }
-	    	    });
-    			geocoder.geocode( { 'address': parsedJSON.adresseArrivee + ", Nantes"}, function(results, status) {
-	    	      if (status == google.maps.GeocoderStatus.OK) {
-	    	    	  var latlng = results[0].geometry.location.toString().substr(1, results[0].geometry.location.toString().length - 1);
-	    	    	  latlng = latlng.split(", ");
-	        		  trip.push(new google.maps.LatLng(latlng[0], latlng[1]));
-	    	      } else {
-	    	        alert("Geocode was not successful for the following reason: " + status);
-	    	      }
-	    	    });*/
     			
 	    		$.each(parsedJSON, function(index, element) {
 	    			if(typeof element == "object" && index != "itineraire") {
-	    				//trip.push(element.libelle);
     					inject += "<tr><td>" + element.heureDepart + "</br>" + element.heureArrivee + "</td><td>" + element.libelle + "</td><td>" + element.route + "</td></tr>";
 	    			}
 	    		});
@@ -96,17 +78,15 @@ function calcRoute() {
 		    	});
 		    	
 		    	//json print
-		    	//$("body").append(data);
-		    	alert(data);
-		    	var poly = new google.maps.Polyline({
+		    	/*var poly = new google.maps.Polyline({
 		    		map: map,
 		    		path: trip,//chemin du tracé
 		    		strokeColor: "#FF0000",//couleur du tracé
 		    		strokeOpacity: 1.0,//opacité du tracé
 		    		strokeWeight: 2//grosseur du tracé
-		    	});
+		    	});*/
 
-		    	poly.setMap(map);
+		    	//poly.setMap(map);
 		    	
 		    	//test
 		    	
@@ -166,6 +146,7 @@ function calcRoute() {
   }
 }
 
+
 function secondsToTime(secs)
 {
     var hours = Math.floor(secs / (60 * 60));
@@ -196,16 +177,51 @@ google.maps.event.addDomListener(window, 'load', initialize);
   
 	$(document).ready(function() {
 		
-		//Autocompletion
-	var availableTags = [
-		"Michelet",
-		"Facultés",
-		"Commerce"
-	];
+
+		$("#depart").change(function() {
+			$.ajax({
+		    	type: "GET",
+		        url: "tan",
+		        data: { nom: $(this).val()},
+		    	success: function(data) {
+			    	var parsedJSON = $.parseJSON(data);
+			    	var inject = "";
+			    	$.each(parsedJSON, function(index, element) {
+			    		if(typeof element == "object")
+			    			inject += "<option value='" + element.id + "'>" + element.nom + " " + element.ville + "</option>";
+			    	});
+			    	$("#departSelect").empty();
+			    	$("#departSelect").append(inject);
+			    },
+			    error : function(jqXHR, status, exception) {
+			    	alert("error : " + status + " / " + exception);
+			    }
+		    });
+		});
+		
+		$("#arrivee").change(function() {
+			$.ajax({
+		    	type: "GET",
+		        url: "tan",
+		        data: { nom: $(this).val()},
+		    	success: function(data) {
+			    	var parsedJSON = $.parseJSON(data);
+			    	var inject = "";
+			    	$.each(parsedJSON, function(index, element) {
+			    		if(typeof element == "object")
+			    			inject += "<option value='" + element.id + "'>" + element.nom + " " + element.ville + "</option>";
+			    	});
+			    	$("#arriveeSelect").empty();
+			    	$("#arriveeSelect").append(inject);
+			    },
+			    error : function(jqXHR, status, exception) {
+			    	alert("error : " + status + " / " + exception);
+			    }
+		    });
+		});
 	
-	$(".input").autocomplete({
-		source: availableTags
-	});
+	
+	
 	
 	$("#map-canvas").height($("body").height()-350);
 	//google.maps.event.trigger(map,'resize');
