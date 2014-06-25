@@ -49,9 +49,9 @@ function calcRoute() {
 	    		var parsedJSON = $.parseJSON(data);
 	    		var inject = "";
 	    		
-	    		inject += "<div> Départ : " + parsedJSON.adresseDepart + " à " + parsedJSON.heureDepart
+	    		inject += "<p> Départ : " + parsedJSON.adresseDepart + " à " + parsedJSON.heureDepart
     					+ "<br/> Arriv&eacute;e : " + parsedJSON.adresseArrivee + " à " + parsedJSON.heureArrivee
-    					+ "<br/> Dur&eacute;e : " + parsedJSON.duree + "<table>";
+    					+ "<br/> Dur&eacute;e : " + parsedJSON.duree + "<div id='table_details'><table>";
     					
     			var trip = new Array();	
     			
@@ -77,13 +77,16 @@ function calcRoute() {
 	    		$.each(parsedJSON, function(index, element) {
 	    			if(typeof element == "object" && index != "itineraire") {
 	    				//trip.push(element.libelle);
-    					inject += "<tr><td>" + element.heureDepart + " - " + element.heureArrivee + "</td><td>" + element.libelle + "</td><td>" + element.route + "</td></tr>";
+    					inject += "<tr><td>" + element.heureDepart + "</br>" + element.heureArrivee + "</td><td>" + element.libelle + "</td><td>" + element.route + "</td></tr>";
 	    			}
 	    		});
 	    		
-	    		inject += "</table></div>";
+	    		inject += "</table></div></p>";
 	    		
+	    		$("#details_bottom p").remove();
 		    	$("#details_bottom").append(inject);
+		        $("#table_details").niceScroll({cursorcolor:"#E87976"});
+
 		    	
 		    	inject = "";
 		    	$.each(parsedJSON.itineraire, function(index, element) {
@@ -259,5 +262,5 @@ google.maps.event.addDomListener(window, 'load', initialize);
     		 slide = true;
     	 }
      });
-	
+     	
 });

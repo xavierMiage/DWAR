@@ -207,33 +207,41 @@ body{
 }
 
 #details_top{
-	
+	height:16%;
 }
 
 #details_bottom{
-	
+	height: 78%;
+	margin-top: 11px;
 }
 
 .details{
-	width: 261px;
+	width: 233px;
 	margin-left: 65px;
 	height: 50%;
+	margin-top:20px;
 }
 
 .subtitle_details{
 	color: white;
 	font-size: 15px;
-	margin-top: 20px;
 }
 
-#details_top > p{
+#details_top > p, #details_bottom > p{
 	color: white;
 	font-size: 13px;
+	margin-left:25px;
 }
 
-#details_bottom > p{
-	color: white;
-	font-size: 13px;
+#table_details {
+  overflow: hidden;
+	height: 55%;
+}
+
+#table_details:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 #footer{
@@ -484,7 +492,25 @@ p{
 }
 
 table{
-	margin-left: 50px;
+	color: white;
+	font-size:10px
+}
+
+table tr td{
+	border-bottom: solid 1px rgb(232, 121, 118);	
+}
+
+table tr td:nth-child(1){
+	border-right: solid 1px rgb(232, 121, 118);	
+}
+
+table tr td:nth-child(3){
+	border-left: solid 1px rgb(232, 121, 118);	
+}
+
+
+table tr:last-child td{
+	border-bottom: none;	
 }
 
 .icone img{
